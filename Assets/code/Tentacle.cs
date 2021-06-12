@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Tentacle : MonoBehaviour
 {
-    private LineRenderer lr;
-    private Vector3 grapplePoint;
+    public LineRenderer lr;
+    public Vector3 grapplePoint;
     public LayerMask canGrappleable;
     public Transform TentacleTip, camera, player;
     private float maxDistance = 100f;
-    private SpringJoint joint;
+    public SpringJoint joint;
     public Transform playerPosition;
 
     void Awake()
@@ -28,8 +28,8 @@ public class Tentacle : MonoBehaviour
         {
             StopGrapple();
         }
-        
-        if (Input.GetMouseButtonDown(0)&&Input.GetMouseButton(1))
+
+        if (joint && Input.GetMouseButton(1)) 
         {
             HookForward();
             Debug.Log(0);
@@ -45,7 +45,7 @@ public class Tentacle : MonoBehaviour
     void StartGrapple()
     {
         RaycastHit hit;
-        if (Physics.Raycast(camera.position, camera.forward, out hit, maxDistance, canGrappleable)) 
+        if (Physics.SphereCast(camera.position, 2f, camera.forward, out hit, maxDistance, canGrappleable)) 
         {
             grapplePoint = hit.point;
             joint = player.gameObject.AddComponent<SpringJoint>();
@@ -100,6 +100,6 @@ public class Tentacle : MonoBehaviour
     
     void HookForward()
     {
-        playerPosition.transform.position = Vector3.MoveTowards(playerPosition.position, grapplePoint, 10.0f * Time.deltaTime);
+        playerPosition.transform.position = Vector3.MoveTowards(playerPosition.position, grapplePoint, 25.0f * Time.deltaTime);
     }
 }
