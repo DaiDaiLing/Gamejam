@@ -307,7 +307,7 @@ public class PlayerMovement : MonoBehaviour
 
     void LateUpdate()
     {
-        Pull();
+        //Pull();
     }
     void Pull()
     {
@@ -345,12 +345,13 @@ public class PlayerMovement : MonoBehaviour
 
             countHolding = 0f;
 
-            rb.velocity = new Vector3(0, 0, 0);
-            rb.AddForce(tentacle.grapplePoint * 4f, ForceMode.Impulse);
+            //rb.velocity = new Vector3(0, 0, 0);
+            rb.AddForce(tentacle.grapplePoint * 3f, ForceMode.Impulse);
             /*
-            temp = 80;
+            temp = 80;*/
             Debug.Log(tentacle.grapplePoint);
-            */
+            
+             
             
         }
         if (countHolding > 0.35f)
