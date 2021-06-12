@@ -6,7 +6,7 @@ public class Tentacle : MonoBehaviour
 {
     float timer = 0f;
 
-    bool clickOneTime = false;
+    bool flying = false;
     float countHolding = 0f;
 
     public LineRenderer lr;
@@ -16,12 +16,14 @@ public class Tentacle : MonoBehaviour
     private float maxDistance = 100f;
     public SpringJoint joint;
     public Transform playerPosition;
+    public GameObject prediction;
 
     float distanceFromPoint;
 
     void Awake()
     {
         lr = this.GetComponent<LineRenderer>();
+        prediction.SetActive(false);
     }
 
     void Update()
@@ -37,6 +39,18 @@ public class Tentacle : MonoBehaviour
         }
 
         Pull();
+
+        if (Physics.SphereCast(camera.position, 1f, camera.forward, out RaycastHit hit, maxDistance, canGrappleable))
+        {
+            prediction.SetActive(true);
+            prediction.transform.position = hit.point;
+        }
+        else
+        {
+            prediction.SetActive(false);
+        }
+
+
     }
 
     void LateUpdate()
@@ -57,12 +71,14 @@ public class Tentacle : MonoBehaviour
 
             distanceFromPoint = Vector3.Distance(player.position, grapplePoint);
 
-            joint.maxDistance = distanceFromPoint * 0.8f;
+            joint.maxDistance = distanceFromPoint * 0.7f;
             joint.minDistance = distanceFromPoint * 0f;
-
-            joint.spring = 0f;
-            joint.damper = 0f;
+            
+            joint.spring = 4.5f;
+            joint.damper = 7f;
             joint.massScale = 4.5f;
+
+            joint.tolerance = 0.01f;
 
             lr.positionCount = 2;
             currentGrapplePosition = TentacleTip.position;
@@ -124,12 +140,22 @@ public class Tentacle : MonoBehaviour
         {
             //clickOneTime = false;
 
-
-            joint.spring = 100f;
-
+            flying = true;
+            joint.spring = 20f;
+            joint.damper = 2f;
 
         }
-        if (countHolding > 0.3f)
+        if (flying)
+        {
+            if (Vector3.Distance(playerPosition.position, grapplePoint) < 7f || countHolding > 1f) 
+            {
+                joint.spring = 4.5f;
+                joint.damper = 7f;
+                flying = false;
+                Debug.Log("end");
+            }
+        }
+        else if (countHolding > 0.3f)
         {
             //clickOneTime = false;
 
@@ -138,10 +164,11 @@ public class Tentacle : MonoBehaviour
             joint.spring = 4.5f;
 
         }
-        if (countHolding > 0.5f)
+        else if (countHolding > 0.5f)
         {
             joint.damper = 7f;
         }
-        Debug.Log(countHolding);
+        
+        
     }
 }
