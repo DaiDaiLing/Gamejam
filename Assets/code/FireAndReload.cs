@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FireAndReload : MonoBehaviour
 {
+
+
     public GameObject moveingArrow;
     public Transform camera;
     public float maxDistance = 100f;
@@ -40,7 +43,9 @@ public class FireAndReload : MonoBehaviour
                 GameObject e = Instantiate(moveingArrow) as GameObject;
                 e.transform.position = Arrow.position;
                 e.transform.rotation = Arrow.rotation;
-                e.GetComponent<ArrowMove>().FireAndReload = gameObject.GetComponent<FireAndReload>();
+                e.GetComponent<ArrowMove>().endPoint = hitPoint;
+
+               
 
                 Arrow.localPosition = Vector3.zero;
 

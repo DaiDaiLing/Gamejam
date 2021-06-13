@@ -12,7 +12,7 @@ public class MoveCamera : MonoBehaviour {
     bool switching = false;
     public bool isBinding = false;
 
-    GameObject Warrior;
+    public GameObject Warrior;
 
     float switchTime = 0f;
     float firstSpeed = 0f;
@@ -71,7 +71,7 @@ public class MoveCamera : MonoBehaviour {
 
                 Warrior.GetComponent<FireAndReload>().enabled = false;
                 Warrior.GetComponent<Warrior>().enabled = false;
-
+                Warrior.GetComponent<EnemyAI>().enabled = false;
                 firstSpeed = Vector3.Distance(transform.position, player.transform.position) * speed;
 
                 transform.LookAt(playerFacing);
@@ -114,6 +114,7 @@ public class MoveCamera : MonoBehaviour {
             {
                 hitWarrior.GetComponent<FireAndReload>().enabled = true;
                 hitWarrior.GetComponent<Warrior>().enabled = true;
+                hitWarrior.GetComponent<EnemyAI>().enabled = true;
                 playerCamPlace = hitWarrior.transform.GetChild(1);
                 transform.localRotation = hitWarrior.transform.localRotation;
             }

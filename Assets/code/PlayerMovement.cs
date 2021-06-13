@@ -3,8 +3,11 @@
 using System;
 using UnityEngine;
 
+
 public class PlayerMovement : MonoBehaviour
 {
+    
+
     int temp = 0;
     bool clickOneTime = false;
     float countHolding = 0f;
@@ -74,6 +77,8 @@ public class PlayerMovement : MonoBehaviour
     {
         MyInput();
         Look();
+
+        
     }
 
     /// <summary>
@@ -368,4 +373,6 @@ public class PlayerMovement : MonoBehaviour
             tentacle.playerPosition.transform.position = Vector3.MoveTowards(tentacle.playerPosition.position, tentacle.grapplePoint, 25.0f * Time.deltaTime);
         }*/
     }
+
+    
 }
