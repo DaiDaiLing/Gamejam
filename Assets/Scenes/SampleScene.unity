@@ -499,15 +499,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -2179,9 +2179,12 @@ MonoBehaviour:
   TentacleTip: {fileID: 1977734120}
   camera: {fileID: 963194228}
   player: {fileID: 25417610}
+  maxDistance: 60
   joint: {fileID: 0}
   playerPosition: {fileID: 25417610}
   prediction: {fileID: 1151005854}
+  image: {fileID: 170609562}
+  moveCamera: {fileID: 1624147245}
 --- !u!120 &1146304167
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -2468,7 +2471,7 @@ MonoBehaviour:
   Body: {fileID: 1165182390}
   playerCam: {fileID: 1624147244}
   orientation: {fileID: 1468880077}
-  moveSpeed: 4500
+  moveSpeed: 4000
   maxSpeed: 20
   grounded: 0
   whatIsGround:
@@ -3462,6 +3465,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 631035941}
+  tentacle: {fileID: 1146304166}
+  playerMovement: {fileID: 25417607}
+  playerCamPlace: {fileID: 631035941}
+  isBinding: 0
+  speed: 0.2
 --- !u!1 &1642685672
 GameObject:
   m_ObjectHideFlags: 0

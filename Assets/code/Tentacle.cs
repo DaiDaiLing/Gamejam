@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Tentacle : MonoBehaviour
 {
@@ -9,14 +10,17 @@ public class Tentacle : MonoBehaviour
     bool flying = false;
     float countHolding = 0f;
 
+
     public LineRenderer lr;
     public Vector3 grapplePoint;
     public LayerMask canGrappleable;
     public Transform TentacleTip, camera, player;
-    private float maxDistance = 100f;
+    public float maxDistance = 100f;
     public SpringJoint joint;
     public Transform playerPosition;
     public GameObject prediction;
+    public Image image;
+    public MoveCamera moveCamera;
 
     float distanceFromPoint;
 
@@ -28,26 +32,32 @@ public class Tentacle : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            StartGrapple();
-            
-        }
-        else if(Input.GetMouseButtonUp(0))
-        {
-            StopGrapple();
-        }
 
-        Pull();
+        if (!moveCamera.isBinding)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                StartGrapple();
 
-        if (Physics.SphereCast(camera.position, 1f, camera.forward, out RaycastHit hit, maxDistance, canGrappleable))
-        {
-            prediction.SetActive(true);
-            prediction.transform.position = hit.point;
-        }
-        else
-        {
-            prediction.SetActive(false);
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                StopGrapple();
+            }
+
+            Pull();
+
+            if (Physics.SphereCast(camera.position, 1f, camera.forward, out RaycastHit hit, maxDistance, canGrappleable))
+            {
+                prediction.SetActive(true);
+                prediction.transform.position = hit.point;
+                image.color = Color.red;
+            }
+            else
+            {
+                prediction.SetActive(false);
+                image.color = Color.white;
+            }
         }
 
 
@@ -56,7 +66,6 @@ public class Tentacle : MonoBehaviour
     void LateUpdate()
     {
         DrawRope();
-
     }
 
     void StartGrapple()
@@ -103,7 +112,14 @@ public class Tentacle : MonoBehaviour
     {
         if (!joint) return;
 
-        currentGrapplePosition = Vector3.Lerp(currentGrapplePosition, grapplePoint, Time.deltaTime * 4f);
+        if (!moveCamera.isBinding)
+        {
+            currentGrapplePosition = Vector3.Lerp(currentGrapplePosition, grapplePoint, Time.deltaTime * 7f);
+        }
+        else
+        {
+            currentGrapplePosition = grapplePoint;
+        }
 
         lr.SetPosition(0, TentacleTip.position);
         lr.SetPosition(1, currentGrapplePosition);
