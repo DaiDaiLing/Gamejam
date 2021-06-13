@@ -47,7 +47,7 @@ public class MoveCamera : MonoBehaviour {
 
         if (Physics.SphereCast(transform.position, 1f, transform.forward, out RaycastHit hitWarrior, tentacle.maxDistance, 1 << 9))
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(1))
             {
                 switching = true;
                 isBinding = true;
@@ -68,6 +68,9 @@ public class MoveCamera : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.F) || Vector3.Distance(Warrior.transform.position, playerFacing.position) > 60f) 
             {
                 switching = true;
+
+                Warrior.GetComponent<FireAndReload>().enabled = false;
+                Warrior.GetComponent<Warrior>().enabled = false;
 
                 firstSpeed = Vector3.Distance(transform.position, player.transform.position) * speed;
 
@@ -109,13 +112,14 @@ public class MoveCamera : MonoBehaviour {
             //tentacle.enabled = true;
             if (!isBackingFromBinding)
             {
+                hitWarrior.GetComponent<FireAndReload>().enabled = true;
                 hitWarrior.GetComponent<Warrior>().enabled = true;
                 playerCamPlace = hitWarrior.transform.GetChild(1);
                 transform.localRotation = hitWarrior.transform.localRotation;
             }
             else
             {
-                hitWarrior.GetComponent<Warrior>().enabled = false;
+                
                 playerCamPlace = player;
                 transform.localRotation = playerFacing.localRotation;
 

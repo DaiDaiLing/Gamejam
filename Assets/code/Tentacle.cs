@@ -147,7 +147,11 @@ public class Tentacle : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && joint)
         {
-            joint.spring += Time.deltaTime;
+            if (joint.spring < 12)
+            {
+                joint.spring += Time.deltaTime*2;
+            }
+
             Debug.Log(joint.spring);
         }
         /*

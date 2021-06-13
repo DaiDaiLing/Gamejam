@@ -116,11 +116,8 @@ public class PlayerMovement : MonoBehaviour
     private void Movement()
     {
         //Extra gravity
-        if (Input.GetMouseButton(0) && tentacle.joint)
-        {
-            rb.AddForce(Vector3.up * Time.deltaTime * 10);
-        }
-
+        rb.AddForce(Vector3.up * Time.deltaTime * 10);
+        
 
         //Find actual velocity relative to where player is looking
         Vector2 mag = FindVelRelativeToLook();
